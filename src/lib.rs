@@ -73,7 +73,7 @@ fn calculate_smallest_internal(number_of_matchsticks: usize) -> Result<CalcResul
 }
 
 #[wasm_bindgen]
-pub fn calculate_largest_no_leading_zeroes(number_of_matchsticks: usize) -> Result<JsValue, JsValue> {
+pub fn calculate_smallest_no_leading_zeroes(number_of_matchsticks: usize) -> Result<JsValue, JsValue> {
     calculate_smallest_no_leading_zeroes_internal(number_of_matchsticks)
         .map(|x| to_json_result(&x).unwrap())
         .map_err(|x| to_json_result(&x).unwrap())

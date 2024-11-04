@@ -7,3 +7,5 @@ wasm-pack.log
 .idea
 *.iml
 proptest-regressions
+node_modules
+dist
