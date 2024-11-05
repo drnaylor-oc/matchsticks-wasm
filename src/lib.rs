@@ -17,14 +17,25 @@ struct CalcResult {
 }
 
 #[derive(Serialize, Debug, PartialEq)]
+struct OkResult {
+    correct: bool
+}
+
+#[derive(Serialize, Debug, PartialEq)]
 struct ErrorResult<'a> {
     error: &'a str
 }
 
 #[wasm_bindgen]
-pub fn calculate_largest(number_of_matchsticks: usize) -> Result<JsValue, JsValue> {
+pub fn calculate_largest(number_of_matchsticks: usize, result: String) -> Result<JsValue, JsValue> {
     calculate_largest_internal(number_of_matchsticks)
-        .map(|x| to_json_result(&x).unwrap())
+        .map(|x| {
+            to_json_result(
+                &OkResult {
+                    correct: x.result.eq(result.trim())
+                }
+            ).unwrap()
+        })
         .map_err(|x| to_json_result(&x).unwrap())
 }
 
@@ -44,9 +55,15 @@ fn calculate_largest_internal(number_of_matchsticks: usize) -> Result<CalcResult
 }
 
 #[wasm_bindgen]
-pub fn calculate_smallest(number_of_matchsticks: usize) -> Result<JsValue, JsValue> {
+pub fn calculate_smallest(number_of_matchsticks: usize, result: String) -> Result<JsValue, JsValue> {
     calculate_smallest_internal(number_of_matchsticks)
-        .map(|x| to_json_result(&x).unwrap())
+        .map(|x| {
+            to_json_result(
+                &OkResult {
+                    correct: x.result.eq(result.trim())
+                }
+            ).unwrap()
+        })
         .map_err(|x| to_json_result(&x).unwrap())
 }
 
@@ -73,9 +90,15 @@ fn calculate_smallest_internal(number_of_matchsticks: usize) -> Result<CalcResul
 }
 
 #[wasm_bindgen]
-pub fn calculate_smallest_no_leading_zeroes(number_of_matchsticks: usize) -> Result<JsValue, JsValue> {
+pub fn calculate_smallest_no_leading_zeroes(number_of_matchsticks: usize, result: String) -> Result<JsValue, JsValue> {
     calculate_smallest_no_leading_zeroes_internal(number_of_matchsticks)
-        .map(|x| to_json_result(&x).unwrap())
+        .map(|x| {
+            to_json_result(
+                &OkResult {
+                    correct: x.result.eq(result.trim())
+                }
+            ).unwrap()
+        })
         .map_err(|x| to_json_result(&x).unwrap())
 }
 
