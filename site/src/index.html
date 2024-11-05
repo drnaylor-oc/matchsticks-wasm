@@ -39,7 +39,7 @@
                 <h2>Check your solutions</h2>
             </div>
         </div>
-        <form>
+        <form name="matchsticksValidate">
             <div class="row g-3 align-items-center">
                 <div class="col">
                     <div class="form-check">
@@ -65,13 +65,13 @@
             <div class="row g-3 mb-3 align-items-center">
                 <div class="col">
                     <label for="matchsticksInput" class="col-form-label">Matchsticks</label>
-                    <input type="number" min="2" max="999999999999" id="matchsticksInput" class="form-control">
+                    <input type="number" min="2" max="999999999999" name="matchsticksInput" id="matchsticksInput" class="form-control">
                 </div>
             </div>
             <div class="row g-3 mb-3 align-items-center">
                 <div class="col">
                     <label for="answer" class="col-form-label">Result String (include leading zeros)</label>
-                    <input type="text" pattern="\d+" id="answer" class="form-control" title="This should only contain numbers">
+                    <input type="text" pattern="\d+" id="answer" name="answer" class="form-control" title="This should only contain numbers">
                 </div>
             </div>
             <button class="btn btn-primary" type="submit">Check</button>
