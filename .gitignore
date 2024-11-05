@@ -9,3 +9,4 @@ wasm-pack.log
 proptest-regressions
 node_modules
 dist
+.DS_Store
