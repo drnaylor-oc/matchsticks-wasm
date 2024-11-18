@@ -19,7 +19,7 @@ document.forms['matchsticksValidate'].onsubmit = function(e) {
     let fnToCall = null;
     let calcName = null;
     if (String(form.get('answer')) === "" || Number(form.get('matchsticksInput')) === 0) {
-        setFeedback(false, "Matchsticks and Result String must be filled in!")
+        setFeedback(false, "Matchsticks and Digits string must be filled in!")
     } else if (document.getElementById('smallestRadio').checked) {
         fnToCall = calculate_smallest;
         calcName = 'smallest value';
