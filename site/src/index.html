@@ -13,7 +13,8 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>Matchsticks and Numbers</h1>
+                <h1>Learn by Doing Puzzle 5: Matchsticks and Numbers</h1>
+                <hr />
                 <h2>The Task</h2>
                 <p>
                     You have a set of matchsticks. One day, you decide that you want to create numbers out of them! You can create the digits 0 to 9 like so:
@@ -27,19 +28,56 @@
                     Using <strong>all</strong> of your matchsticks, write an algorithm that calculates the largest number and smallest number that you can make, and how many digits you require to make each of those numbers.
                 </p>
                 <p>
-                    Start by solving this for 10 matchsticks, then try 100, then try 10000. Remember, none can be left over, and you cannot make any other symbol than the 10 digits above.
+                    Start by solving this for low number of matchsticks (from 2 up to 25), then build up to 10000 matchsticks. Remember, none can be left over, and you cannot make any other symbol than the 10 digits above.
                 </p>
                 <p>
-                    Once you've done that, you ponder... what's the smallest number you can make <strong>without</strong> leading zeroes?
+                    Once you've done that, you ponder... what's the smallest number you can make <strong>without</strong> leading zeroes for a given number of matchsticks?
+                </p>
+                <p>
+                    <strong>During the solution session, values will be provided for 10, 25, 100, 1000 and 10,000 matchsticks, though your algorithms should be able to handle an arbitrary number of matchsticks.</strong>
                 </p>
             </div>
+            <hr />
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>Example: 10 Matchsticks</h2>
+                <p>
+                    You must use <strong>all</strong> of your matchsticks for any solution you arrive at. If you have 10 matchsticks, and must use them all, you could build the numbers (not an exhaustive list):
+                </p>
+                <ul>
+                    <li>40 (4 and 6 matchsticks)</li>
+                    <li>56 (5 and 5 matchsticks)</li>
+                    <li>101 (2, 6 and 2 matchsticks)</li>
+                </ul>
+                <p>
+                    However, you <strong>cannot</strong> create the number 81, because that requires 9 matchsticks (7 and 1) with one left over. You can't create 0 on its own either, because four matchsticks remain.
+                </p>
+            </div>
+            <hr />
         </div>
         <div class="row">
             <div class="col">
                 <h2>Check your solutions</h2>
+                <p>
+                    Once you've come up with a solution, you can check your solutions below. Enter:
+                </p>
+                <ul>
+                    <li>whether which calculation type you are checking;</li>
+                    <li>how many matchsticks you are simulating; and,</li>
+                    <li>the digits you've created <strong>with your leading zeroes</strong>.</li>
+                </ul>
+                <p>
+                    The calculator below will tell you whether you are correct or not, but it will not give you the answer if you are wrong.
+                </p>
             </div>
         </div>
-        <form name="matchsticksValidate">
+        <form name="matchsticksValidate" class="form-style">
+            <div class="row g-3 align-items-center">
+                <div class="col fs-3">
+                    Calculation Type
+                </div>
+            </div>
             <div class="row g-3 align-items-center">
                 <div class="col">
                     <div class="form-check">
@@ -64,19 +102,31 @@
             </div>
             <div class="row g-3 mb-3 align-items-center">
                 <div class="col">
-                    <label for="matchsticksInput" class="col-form-label">Matchsticks</label>
+                    <label for="matchsticksInput" class="col-form-label fs-3">Number of Matchsticks</label>
                     <input type="number" min="2" max="999999999999" name="matchsticksInput" id="matchsticksInput" class="form-control">
                 </div>
             </div>
             <div class="row g-3 mb-3 align-items-center">
                 <div class="col">
-                    <label for="answer" class="col-form-label">Digits</label>
+                    <label for="answer" class="col-form-label fs-3">Digits (including leading zeroes)</label>
                     <input type="text" pattern="\d+" id="answer" name="answer" class="form-control" title="This should only contain numbers">
                 </div>
             </div>
-            <button class="btn btn-primary" type="submit">Check</button>
-            <div id="feedbackMessage" class="text-success fw-bold fs-3">
+            <div class="row g-3 mb-3 align-items-center">
+                <div class="col">
+                    <button class="btn btn-primary" type="submit">Check</button>
+                </div>
+                <hr />
             </div>
+            <div class="row g-3 mb-3 align-items-center">
+                <div class="col" style="margin-top: 0px;">
+                    <span class="fs-3">Result</span>
+                    <div id="feedbackMessage" class="fs-5">
+                        Check result will appear here
+                    </div>
+                </div>
+            </div>
+
         </form>
     </div>
 
