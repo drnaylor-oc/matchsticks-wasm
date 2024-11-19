@@ -7,6 +7,14 @@ This has been generated from the Rust WebAssembly template.
 
 ## 🚴 Usage
 
+### Test Rust code natively
+
+This targets the `aarch64-apple-darwin` target, if you need a different target, alter the test command within the script accordingly.
+
+```
+./unit_test_lib.sh
+```
+
 ### 🛠️ Build with `wasm-pack build`
 
 ```
