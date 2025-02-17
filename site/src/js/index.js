@@ -1,39 +1,15 @@
 import '../scss/styles.scss';
 
-import { calculate_smallest_no_leading_zeroes, calculate_smallest, calculate_largest } from "matchsticks-wasm";
-
-function setFeedback(success, message) {
-    let el = document.getElementById('feedbackMessage');
-    el.textContent = message;
-    if (success) {
-        el.classList.remove('text-danger');
-        el.classList.add('text-success');
-    } else {
-        el.classList.remove('text-success');
-        el.classList.add('text-danger');
-    }
-}
+import {
+    check_smallest, check_smallest_no_leading_zeroes, check_largest
+} from "matchsticks-wasm";
+import {getForm, setFeedback} from "./common";
 
 document.forms['matchsticksValidate'].onsubmit = function(e) {
-    let form = new FormData(document.forms['matchsticksValidate']);
-    let fnToCall = null;
-    let calcName = null;
-    if (String(form.get('answer')) === "" || Number(form.get('matchsticksInput')) === 0) {
-        setFeedback(false, "Matchsticks and Digits string must be filled in!")
-    } else if (document.getElementById('smallestRadio').checked) {
-        fnToCall = calculate_smallest;
-        calcName = 'smallest value';
-    } else if (document.getElementById('smallestNoZeroRadio').checked) {
-        fnToCall = calculate_smallest_no_leading_zeroes;
-        calcName = 'smallest value with no leading zeroes';
-    } else if (document.getElementById('largestRadio').checked) {
-        fnToCall = calculate_largest;
-        calcName = 'largest value';
-    } else {
-        setFeedback(false, "Calculation type not selected!")
-    }
+    let formInfo = getForm(check_smallest, check_smallest_no_leading_zeroes, check_largest);
 
-    if (fnToCall !== null && fnToCall !== undefined) {
+    if (formInfo !== null) {
+        let { form, fnToCall, calcName } = formInfo;
         let matchsticks = Number(form.get('matchsticksInput'));
         let ans = String(form.get('answer'));
         let result = fnToCall(matchsticks, ans);

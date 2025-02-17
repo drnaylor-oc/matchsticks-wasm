@@ -6,10 +6,13 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
-    entry: "./src/js/index.js",
+    entry: {
+        index: "./src/js/index.js",
+        answer: "./src/js/answers.js"
+    },
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "index.js",
+        filename: "[name].js",
     },
     mode: "development",
     experiments: {
@@ -51,6 +54,7 @@ module.exports = {
         // new CopyPlugin({
         //     patterns: [{ from: "./src/index.html" }],
         // }),
-        new HtmlWebpackPlugin({ template: './src/index.html' })
+        new HtmlWebpackPlugin({ template: './src/index.html', filename: "index.html", chunks: ["index"] }),
+        new HtmlWebpackPlugin({ template: './src/answer.html', filename: "answer.html", chunks: ["answer"] }),
     ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
 };

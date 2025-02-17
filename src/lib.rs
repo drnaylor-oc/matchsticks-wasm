@@ -27,8 +27,13 @@ struct ErrorResult<'a> {
 }
 
 #[wasm_bindgen]
-pub fn calculate_largest(number_of_matchsticks: usize, input: String) -> Result<JsValue, JsValue> {
-    translate_result(calculate_largest_internal(number_of_matchsticks), &input)
+pub fn check_largest(number_of_matchsticks: usize, input: String) -> Result<JsValue, JsValue> {
+    translate_check_result(calculate_largest_internal(number_of_matchsticks), &input)
+}
+
+#[wasm_bindgen]
+pub fn calculate_largest(number_of_matchsticks: usize) -> Result<JsValue, JsValue> {
+    translate_calculation_result(calculate_largest_internal(number_of_matchsticks))
 }
 
 fn calculate_largest_internal(number_of_matchsticks: usize) -> Result<CalcResult, ErrorResult<'static>> {
@@ -47,8 +52,13 @@ fn calculate_largest_internal(number_of_matchsticks: usize) -> Result<CalcResult
 }
 
 #[wasm_bindgen]
-pub fn calculate_smallest(number_of_matchsticks: usize, input: String) -> Result<JsValue, JsValue> {
-    translate_result(calculate_smallest_internal(number_of_matchsticks), &input)
+pub fn check_smallest(number_of_matchsticks: usize, input: String) -> Result<JsValue, JsValue> {
+    translate_check_result(calculate_smallest_internal(number_of_matchsticks), &input)
+}
+
+#[wasm_bindgen]
+pub fn calculate_smallest(number_of_matchsticks: usize) -> Result<JsValue, JsValue> {
+    translate_calculation_result(calculate_smallest_internal(number_of_matchsticks))
 }
 
 fn calculate_smallest_internal(number_of_matchsticks: usize) -> Result<CalcResult, ErrorResult<'static>> {
@@ -74,8 +84,13 @@ fn calculate_smallest_internal(number_of_matchsticks: usize) -> Result<CalcResul
 }
 
 #[wasm_bindgen]
-pub fn calculate_smallest_no_leading_zeroes(number_of_matchsticks: usize, input: String) -> Result<JsValue, JsValue> {
-    translate_result(calculate_smallest_no_leading_zeroes_internal(number_of_matchsticks), &input)
+pub fn check_smallest_no_leading_zeroes(number_of_matchsticks: usize, input: String) -> Result<JsValue, JsValue> {
+    translate_check_result(calculate_smallest_no_leading_zeroes_internal(number_of_matchsticks), &input)
+}
+
+#[wasm_bindgen]
+pub fn calculate_smallest_no_leading_zeroes(number_of_matchsticks: usize) -> Result<JsValue, JsValue> {
+    translate_calculation_result(calculate_smallest_no_leading_zeroes_internal(number_of_matchsticks))
 }
 
 //noinspection RsNonExhaustiveMatch
@@ -138,7 +153,11 @@ fn get_digits_and_remainder(number_of_matchsticks: &usize, division: usize) -> (
     (number_of_matchsticks / division, number_of_matchsticks % division)
 }
 
-fn translate_result(result: Result<CalcResult, ErrorResult>, input: &String) -> Result<JsValue, JsValue> {
+fn translate_calculation_result(result: Result<CalcResult, ErrorResult>) -> Result<JsValue, JsValue> {
+    result.map(|x| to_json_result(&x).unwrap()).map_err(|x| to_json_result(&x).unwrap())
+}
+
+fn translate_check_result(result: Result<CalcResult, ErrorResult>, input: &String) -> Result<JsValue, JsValue> {
     result.map(|x| {
         to_json_result(
             &OkResult {
@@ -200,6 +219,7 @@ mod tests {
     #[case(18, 3, "000")]
     #[case(19, 3, "008")]
     #[case(20, 4, "0001")]
+    #[case(25, 4, "0008")]
     #[case(96, 16, "0000000000000000")]
     #[case(97, 16, "0000000000000008")]
     #[case(98, 17, "00000000000000001")]
@@ -222,9 +242,9 @@ mod tests {
     #[case(7,  1, "8")] // 8 is the only one digit combination
     #[case(8,  2, "10")] // 2 + 6 -- leading 1
     #[case(9,  2, "18")] // 2 + 7 gives the leading 1
-    #[case(10,  2, "22")] // 10 -> 5 + 5. Can't get a 1 (would leave 9 left over), 4 + 6 would give 40, 3 + 7 => 78
+    #[case(10,  2, "22")] // 10 -> 5 + 5. Can't get a 1 (would leave 8 left over), 4 + 6 would give 40, 3 + 7 => 78
     #[case(11,  2, "20")] // 11 -> 5 + 6. Can't get a 1 (would leave 9 left over)
-    #[case(12,  2, "28")] // Last special case
+    #[case(12,  2, "28")] // Last special case, 12 -> 5 + 7, 6 + 6 would be 00, only leading zeroes!
     #[case(13,  2, "80")] // 7 + 6.
     #[case(14,  2, "88")] // 7 + 7
     #[case(15,  3, "108")] // 2 + 6 + 7
@@ -329,8 +349,4 @@ mod tests {
         }
 
     }
-
-
-
-
 }

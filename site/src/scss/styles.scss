@@ -21,3 +21,8 @@ pre.prebg {
 body {
   background-color: #fafbdd;
 }
+
+.ms-wrap {
+  overflow-wrap: break-word;
+  white-space: pre-line;
+}
