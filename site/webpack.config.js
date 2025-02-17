@@ -3,9 +3,8 @@ const path = require("path");
 const autoprefixer = require('autoprefixer')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const devMode = process.env.NODE_ENV !== "production";
 
-module.exports = {
+let config = {
     entry: {
         index: "./src/js/index.js",
         answer: "./src/js/answers.js"
@@ -14,7 +13,6 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
         filename: "[name]1.js",
     },
-    mode: "development",
     experiments: {
         asyncWebAssembly: true,
     },
@@ -23,10 +21,6 @@ module.exports = {
             {
                 test: /\.((s)?css)$/,
                 use: [
-                    {
-                        // Adds CSS to the DOM by injecting a `<style>` tag (in dev)
-                        loader: devMode ? "style-loader" : MiniCssExtractPlugin.loader
-                    },
                     {
                         // Interprets `@import` and `url()` like `import/require()` and will resolve them
                         loader: 'css-loader'
@@ -51,10 +45,23 @@ module.exports = {
         ]
     },
     plugins: [
-        // new CopyPlugin({
-        //     patterns: [{ from: "./src/index.html" }],
-        // }),
         new HtmlWebpackPlugin({ template: './src/index.html', filename: "index.html", chunks: ["index"] }),
         new HtmlWebpackPlugin({ template: './src/answer.html', filename: "answer.html", chunks: ["answer"] }),
-    ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
+    ]
 };
+
+module.exports = (env, argv) => {
+    config.mode = argv.mode ?? 'development';
+    if (argv.mode === 'production') {
+        config.plugins.push(new MiniCssExtractPlugin());
+        config.module.rules[0].use.unshift({
+            loader: MiniCssExtractPlugin.loader
+        });
+    } else {
+        config.module.rules[0].use.unshift({
+            loader: "style-loader"
+        });
+    }
+
+    return config;
+}
