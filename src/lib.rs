@@ -41,12 +41,11 @@ fn calculate_largest_internal(number_of_matchsticks: usize) -> Result<CalcResult
         Err(ErrorResult { error: TOO_FEW_ERROR_MESSAGE })
     } else {
         let (length, remainder) = get_digits_and_remainder(&number_of_matchsticks, 2);
-        let mut result = "1".repeat(length - 1);
-        if remainder == 0 {
-            result.insert_str(0, "1");
+        let result= if remainder == 0 {
+            "1".repeat(length)
         } else {
-            result.insert_str(0, "7");
-        }
+            format!("7{}", "1".repeat(length - 1))
+        };
         Ok(CalcResult { result, length })
     }
 }
@@ -67,7 +66,7 @@ fn calculate_smallest_internal(number_of_matchsticks: usize) -> Result<CalcResul
     } else {
         // adding a leading zero is at 2, 8, 14, 20... i.e. offset by 2 from the 6x tables
         let zero_digits = (number_of_matchsticks - 2) / 6;
-        let remainder = number_of_matchsticks % 6;
+        let remainder = number_of_matchsticks % 6; // same as ((number_of_matchsticks - 2) % 6) + 2 if we set match up to be 6 and 7 in place of 0 and 1
         let mut result = "0".repeat(zero_digits);
 
         match remainder {
