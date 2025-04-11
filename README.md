@@ -1,7 +1,7 @@
 # Matchsticks and Numbers: WebAssembly library
 
 This small Rust code is designed to at least obfuscate the Matchsticks algorithm to try to deter people from just looking it up, while
-allowing it all to run server side.
+allowing it all to run client side.
 
 This has been generated from the Rust WebAssembly template.
 
